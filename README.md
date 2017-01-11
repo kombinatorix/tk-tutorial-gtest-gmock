@@ -13,3 +13,9 @@ cmake ..
 make
 sudo make install
 ```
+
+## Languages
+
+This tutorial is currently available in German.
+
+[Tutorial in German](GERMAN.md)
