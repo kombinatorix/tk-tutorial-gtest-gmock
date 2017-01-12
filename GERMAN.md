@@ -23,14 +23,7 @@ Für Google Test ist die Struktur in der folgenden Tabelle aufgeführt.
 
 Wie man der Tabelle entnehmen kann, sieht die Struktur eines Minimalbeispiels wie folgt aus.
 	
-	Test program{
-		Test case{
-			Test{
-				Assertion{
-				}
-			}
-		}
-	}
+	Test program( Test case ( Test ( Assertion ( ... ) ) ) )
 
 ## Google Mock ##
 
