@@ -270,7 +270,36 @@ int main(int argc,char **argv){
 }
 ```
 
-Nach Kompilierung und Ausführung sehen wir, dass failOne und failThree nur einen Fehler zurückmelden, wobei failTwo und failFour 4 fehler zurückmelden.
+Nach Kompilierung und Ausführung sehen wir, dass failOne und failThree nur einen Fehler zurückmelden, wobei failTwo und failFour 2 Fehler zurückmelden.
+
+Da wir jetzt ein Gefühl dafür bekommen haben, was eine Assertion ist und wie sie benutzt wird, sollen im Folgenden die möglichen Ausprägungen vorgestellt werden.
+
+#### Wahrheitswertige Assertions ####
+
+| **Fatal assertion** | **Nonfatal assertion** | **Prüft** |
+|:--------------------|:-----------------------|:----------|
+| `ASSERT_TRUE(`_condition_`)`;  | `EXPECT_TRUE(`_condition_`)`;   | _condition_ is true |
+| `ASSERT_FALSE(`_condition_`)`; | `EXPECT_FALSE(`_condition_`)`;  | _condition_ is false |
+
+#### Binäre Vergleiche ####
+
+| **Fatal assertion** | **Nonfatal assertion** | **Prüft** |
+|:--------------------|:-----------------------|:----------|
+|`ASSERT_EQ(`_val1_`, `_val2_`);`|`EXPECT_EQ(`_val1_`, `_val2_`);`| _val1_ `==` _val2_ |
+|`ASSERT_NE(`_val1_`, `_val2_`);`|`EXPECT_NE(`_val1_`, `_val2_`);`| _val1_ `!=` _val2_ |
+|`ASSERT_LT(`_val1_`, `_val2_`);`|`EXPECT_LT(`_val1_`, `_val2_`);`| _val1_ `<` _val2_ |
+|`ASSERT_LE(`_val1_`, `_val2_`);`|`EXPECT_LE(`_val1_`, `_val2_`);`| _val1_ `<=` _val2_ |
+|`ASSERT_GT(`_val1_`, `_val2_`);`|`EXPECT_GT(`_val1_`, `_val2_`);`| _val1_ `>` _val2_ |
+|`ASSERT_GE(`_val1_`, `_val2_`);`|`EXPECT_GE(`_val1_`, `_val2_`);`| _val1_ `>=` _val2_ |
+
+#### C-String Vergleiche ####
+
+| **Fatal assertion** | **Nonfatal assertion** | **Prüft** |
+|:--------------------|:-----------------------|:----------|
+| `ASSERT_STREQ(`_str1_`, `_str2_`);`    | `EXPECT_STREQ(`_str1_`, `_str_2`);`     | the two C strings have the same content |
+| `ASSERT_STRNE(`_str1_`, `_str2_`);`    | `EXPECT_STRNE(`_str1_`, `_str2_`);`     | the two C strings have different content |
+| `ASSERT_STRCASEEQ(`_str1_`, `_str2_`);`| `EXPECT_STRCASEEQ(`_str1_`, `_str2_`);` | the two C strings have the same content, ignoring case |
+| `ASSERT_STRCASENE(`_str1_`, `_str2_`);`| `EXPECT_STRCASENE(`_str1_`, `_str2_`);` | the two C strings have different content, ignoring case |
 
 
 ## Google Mock ##
