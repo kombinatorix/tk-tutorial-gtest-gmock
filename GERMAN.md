@@ -33,6 +33,7 @@ Allgemein gesprochen eine Assertion eine vorn drei Zuständen zurückmelden: **s
 
 Es ist zwar einfach einen Erfolg festzustellen, aber Google Test hat keine Möglichkeit abzuleiten, ob ein Fehler fatal ist oder nicht.
 Dies muss der Benutzer selbst festlegen. Deshalb gibt es **2** Typen von Assertions:
+
 |Typ           |Erfolg|Fehler          |
 |--------------|------|----------------|
 |** ASSERT_* **|succes|fatal failure   |
