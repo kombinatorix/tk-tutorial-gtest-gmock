@@ -44,16 +44,16 @@ Mehr Informationen brauchen wir nicht für unseren ersten Test. Hierzu nutzen wi
 <table>
 <tr>
 <td>
-```
-Test 1
-foo
-```
+	<pre lang = "C++">
+	Test 1
+	foo
+	</pre>
 </td>
 <td>
-```
-Test 2
-bar
-```
+	<pre lang = "C++">
+	Test 2
+	bar
+	</pre>
 </td>
 </tr>
 </table>
