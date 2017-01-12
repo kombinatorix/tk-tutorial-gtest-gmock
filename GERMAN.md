@@ -125,7 +125,7 @@ Außerdem muss in jedem Fall der Google Test-Header eingebunden werden:
 	#include "include/prog1.hpp"
 ```
 
-Nun definieren wir unseren ersten Test. Ein Test hat immer folgende Struktur
+Nun definieren wir unseren ersten Test. Ein Test hat immer folgende Struktur:
 	
 ```cpp
 TEST(NameDesTestCases, NameDiesesSpeziellenTest){
@@ -136,6 +136,8 @@ TEST(NameDesTestCases, NameDiesesSpeziellenTest){
 ```
 
 Mit `NameDesTestCases` registriert man sozusagen den Test bei einem Test case. Danach gibt man den Namen des Tests an.
+Man sollte am besten auf Unterstriche `_` verzichten. Da Google Test vielfach Makros nutzt kann es durch ungeschickte 
+Benennungen zu Uneindeutigkeiten und damit Fehlern beim kompilieren kommen.
 Erst dann kommt der eigentliche Code zu testen. In unserem einfachen Fall hatten wir:
 
 ```cpp
@@ -145,13 +147,37 @@ Erst dann kommt der eigentliche Code zu testen. In unserem einfachen Fall hatten
 Der Befehl `ASSERT_EQ( ... , ... )` prüft, ob das erste Argument mit dem zweiten übereinstimmt. Dabei ist die Reihenfolge
 egal.
 
+Der Code, der in der main-Funktion steht ist ziemlich selbsterklärend. Bis aufs weitere ist er immer der selbe. Erst später
+wird noch einmal darauf eingegangen.
+
+Als nächstes muss das Testprogramm kompiliert werden. Dies geschieht mit:
 
 ```bash
 g++ -isystem ${GTEST_DIR}/include -pthread prog1_test1.cpp libgtest.a -o prog1_test1 -lgtest
 ```
 
+Hier ist wichtig, dass man das Flag `-lgtest` nicht vergisst. In der offiziellen README des Google Test Projekts fehlt dies.
+Ohne das Flag gibt es jedoch einige Linkerfehler. Ansonsten muss man nur die Namen jeweils anpassen. Das betrifft die .cpp und die .a Datei, sowie
+den Namen der Binary.
 
-**prog1_test2.cpp**:
+Gab es keine Probleme beim Kompilieren, kann das Testprogramm mit `./prog1_test1` ausgeführt werden. Es sollte dann folgenden Output geben:
+
+```bash
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from Addition
+[ RUN      ] Addition.boring
+[       OK ] Addition.boring (0 ms)
+[----------] 1 test from Addition (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 1 test.
+```
+
+Damit lief unser Test ohne Probleme durch. Das ist schön, aber wir haben noch nicht alle Fälle abgedeckt. So haben wir in unserem ursprünglichen unseren
+Input nicht überprüft. Dies kann zu überläufen führen. Dies wird in *prog1_test2.cpp* überprüft:
+
 ```cpp
 #include "include/prog1.hpp"
 #include "gtest/gtest.h"
@@ -168,9 +194,37 @@ int main(int argc,char **argv){
 }
 ```
 
+Jetzt müssen wir das Programm wieder kompilieren:
+
 ```bash
 g++ -isystem ${GTEST_DIR}/include -pthread prog1_test2.cpp libgtest.a -o prog1_test2 -lgtest
 ```
+
+Ausgeführt sollte es dann diesen Output geben:
+
+```bash
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from Addition
+[ RUN      ] Addition.fail
+prog1_test2.cpp:6: Failure
+      Expected: 120000
+To be equal to: add(60000,60000)
+      Which is: -11072
+[  FAILED  ] Addition.fail (0 ms)
+[----------] 1 test from Addition (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] Addition.fail
+
+ 1 FAILED TEST
+```
+
+Unser Test schlägt hier fehl. Aber Google Test versorgt uns mit mehr Informationen. So sehen an welcher Stelle (`prog1_test2.cpp:6: Failure`) das Programm fehlschlug. Außerdem wird uns gezeigt, welche Wert erwartet wurde und welchen Wert wir tatsächlich bekommen.
+
 
 ## Google Mock ##
 
