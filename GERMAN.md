@@ -80,12 +80,13 @@ Für das Programm, dass unsere Addition testet müssen wir noch eine statische B
 erstellen wir dafür eine Objektdation *.o*:
 
 ```bash
-g++ -isystem ${GTEST_DIR}/include  -pthread -c prog1.cpp
+g++ -isystem ${GTEST_DIR}/include -pthread -c prog1.cpp
 ```
 
 Auch wer schon mal mit g++ ein Programm kompiliert hat, kennt nicht umbedingt das Flag `-isystem`. Mit diesem
 Flag können Pfade für Systemheader angegeben werden. Und in unserem Fall möchten wir die Google Test Header 
 nutzen.
+Außerdem nutzen wir das Flag `-pthread`, da Google Test gebrauch von threads macht.
 
 Nun haben wir eine Objektdatei. Jetzt möchten wir eine statische Bibliothek haben. Diese können wir mit `ar` erzeugen:
 
@@ -93,10 +94,9 @@ Nun haben wir eine Objektdatei. Jetzt möchten wir eine statische Bibliothek hab
 ar -rv libgtest.a prog1.o
 ```
 
-Für weitere Informationen über `ar` kann man `man ar` in die Konsole eintippen.
+Für weitere Informationen über `ar` führe `man ar` der Konsole aus.
 
-
-**prog1_test1.cpp**:
+Kommen wir nun zu unserem ersten Testprogram (*prog1_test1.cpp*):
 ```cpp
 #include "include/prog1.hpp"
 #include "gtest/gtest.h"
@@ -112,6 +112,39 @@ int main(int argc,char **argv){
 	return RUN_ALL_TESTS();
 }
 ```
+
+Zuerst müssen wir den Header einbinden, der die zu testenden Funktionen enthält:
+
+```cpp
+	#include "include/prog1.hpp"
+```
+
+Außerdem muss in jedem Fall der Google Test-Header eingebunden werden:
+
+```cpp
+	#include "include/prog1.hpp"
+```
+
+Nun definieren wir unseren ersten Test. Ein Test hat immer folgende Struktur
+	
+```cpp
+TEST(NameDesTestCases, NameDiesesSpeziellenTest){
+
+	//Hier steht der Testcode
+
+}
+```
+
+Mit `NameDesTestCases` registriert man sozusagen den Test bei einem Test case. Danach gibt man den Namen des Tests an.
+Erst dann kommt der eigentliche Code zu testen. In unserem einfachen Fall hatten wir:
+
+```cpp
+	ASSERT_EQ(2, add(1,1));
+```
+
+Der Befehl `ASSERT_EQ( ... , ... )` prüft, ob das erste Argument mit dem zweiten übereinstimmt. Dabei ist die Reihenfolge
+egal.
+
 
 ```bash
 g++ -isystem ${GTEST_DIR}/include -pthread prog1_test1.cpp libgtest.a -o prog1_test1 -lgtest
