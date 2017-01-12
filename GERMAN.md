@@ -52,7 +52,7 @@ Mehr Informationen brauchen wir nicht für unseren ersten Test. Hierzu nutzen wi
 </tr>
 <tr>
 <td valign="top">
-	<pre lang = "C++" style="counter-reset:linecounter;">
+	<pre lang = "C++">
 	#ifndef __prog1__hpp__
 	#define __prog1__hpp__
 
@@ -63,8 +63,8 @@ Mehr Informationen brauchen wir nicht für unseren ersten Test. Hierzu nutzen wi
 	</pre>
 </td>
 <td valign="top">
-	<pre lang = "C++" style="counter-reset:line;">
-<code style="counter-increment:line;">	#include "include/prog1.hpp"<code>	
+	<pre lang = "C++">
+	#include "include/prog1.hpp"	
 	#include <iostream>
 
 	int add(short a, short b){
@@ -74,6 +74,31 @@ Mehr Informationen brauchen wir nicht für unseren ersten Test. Hierzu nutzen wi
 </td>
 </tr>
 </table>
+
+```cpp
+#include "include/prog1.hpp"
+#include "gtest/gtest.h"
+
+TEST(Addition, boring){
+	
+	ASSERT_EQ(2, add(1,1));
+	
+}
+
+int main(int argc,char **argv){
+	::testing::InitGoogleTest(&argc,argv);
+	return RUN_ALL_TESTS();
+}
+```
+```cpp
+
+```
+```cpp
+
+```
+```cpp
+
+```
 
 ## Google Mock ##
 
