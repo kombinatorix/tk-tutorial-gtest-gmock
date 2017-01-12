@@ -41,10 +41,9 @@ Dies muss der Benutzer selbst festlegen. Deshalb gibt es **2** Typen von Asserti
 
 Mehr Informationen brauchen wir nicht für unseren ersten Test. Hierzu nutzen wir ein erstes Beispielprogramm:
 
-<center>
-<table>
+<table align="center">
 <tr>
-<td>
+<td valign="top">
 	prog1.hpp
 	<pre lang = "C++">
 	#ifndef __prog1__hpp__
@@ -53,15 +52,14 @@ Mehr Informationen brauchen wir nicht für unseren ersten Test. Hierzu nutzen wi
 	#endif	
 	</pre>
 </td>
-<td>
-	prog2.cpp
+<td valign="top">
+	prog1.cpp
 	<pre lang = "C++">
 	#include "include/prog1.hpp"	
 	</pre>
 </td>
 </tr>
 </table>
-</center>
 
 ## Google Mock ##
 
