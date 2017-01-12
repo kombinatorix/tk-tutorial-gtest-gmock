@@ -29,15 +29,17 @@ Wir arbeiten uns nun von der kleinsten Einheiten, den Assertions, zu dem großen
 
 ### Assertions ###
 
-Allgemein gesprochen eine Assertion eine vorn drei Zuständen zurückmelden: **success**, **nonfatal failure** und **fatal failure**
+Allgemein gesprochen eine Assertion eine vorn drei Zuständen zurückmelden: **success**, **nonfatal failure** und **fatal failure**.
 
 Es ist zwar einfach einen Erfolg festzustellen, aber Google Test hat keine Möglichkeit abzuleiten, ob ein Fehler fatal ist oder nicht.
 Dies muss der Benutzer selbst festlegen. Deshalb gibt es **2** Typen von Assertions:
 
-|Typ       |Erfolg|Fehler           |
-|----------|------|-----------------|
-| ASSERT_\* |succes|fatal failure   |
-| EXPECT_\* |succes|nonfatal failure|
+|Typ     |Erfolg|Fehler          |
+|:-------|:-----|:---------------|
+| ASSERT |succes|fatal failure   |
+| EXPECT |succes|nonfatal failure|
+
+Mehr Informationen brauchen wir nicht für unseren ersten Test. Hierzu nutzen wir ein erstes Beispielprogramm:
 
 ## Google Mock ##
 
