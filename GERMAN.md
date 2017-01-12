@@ -8,9 +8,10 @@ Danach muss du in der Kommandozeile einmal `source ~/.bashrc` ausführen, damit 
 
 Da Google Test auf Google Test aufbaut, werden wir uns zuerst mit Google Test beschäftigen.
  
-## googletest ##
+## Google Test ##
 
 Google Test ist eine Modultest(Unittest)-Bibliothek für C++. Die Grundlegende Struktur basiert auf der xUnit-Architektur.
+Für Google Test ist die Struktur in der folgenden Tabelle aufgeführt.
 
 | Komponente   | Erklärung                                                                                      |
 |--------------|------------------------------------------------------------------------------------------------|
@@ -20,7 +21,18 @@ Google Test ist eine Modultest(Unittest)-Bibliothek für C++. Die Grundlegende S
 | Test fixture | Setzt die Umgebung(svariablen), so dass Tests dies nicht immer selbst machen müssen.           |
 | Test program | Besteht aus mindestens einem Testcase. Lässt diese durchlaufen.                                | 
 
-## googlemock ##
+Wie man der Tabelle entnehmen kann, sieht die Struktur eines Minimalbeispiels wie folgt aus.
+	
+	Test program{
+		Test case{
+			Test{
+				Assertion{
+				}
+			}
+		}
+	}
+
+## Google Mock ##
 
 
 
