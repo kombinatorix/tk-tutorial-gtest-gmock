@@ -77,7 +77,7 @@ Mehr Informationen brauchen wir nicht für unseren ersten Test. Hierzu nutzen wi
 
 Das Programm macht nichts anderes, als zwei shorts zu addieren und die Summe als Integer zurückzuliefern.
 Für das Programm, dass unsere Addition testet müssen wir noch eine statische Bibliothek erzeugen. Zuerst
-erstellen wir dafür eine Objektdation *.o*:
+erstellen wir dafür eine Objektdatei *.o*:
 
 ```bash
 g++ -isystem ${GTEST_DIR}/include -pthread -c prog1.cpp
@@ -224,6 +224,53 @@ To be equal to: add(60000,60000)
 ```
 
 Unser Test schlägt hier fehl. Aber Google Test versorgt uns mit mehr Informationen. So sehen an welcher Stelle (`prog1_test2.cpp:6: Failure`) das Programm fehlschlug. Außerdem wird uns gezeigt, welche Wert erwartet wurde und welchen Wert wir tatsächlich bekommen.
+
+Ein weiteres nützliches Feature ist, dass man bei einer Assertion eine eigene Fehlermeldung mit dem Streamoperator anhängen kann. Siehe dazu das Testprogramm *prog1_test3.cpp*:
+
+```cpp
+// ...
+
+TEST(Addition, fail){
+	
+	ASSERT_EQ(120000, add(60000,60000)) << "Hier gab es einen Bufferüberlauf und damit ein falsches Ergebnis von: " << add(60000,60000);
+	
+}
+
+// ...
+```
+
+Oben haben wir schon davon gesprochen, dass es `ASSERT` und `EXPECT` gibt. Der Unterschied besteht darin, dass `ASSERT` sofort den Test beendet.
+Bei einem Fehler in `EXPECT` können noch weitere Fehler zurückgemeldet werden. Um das zu demonstrieren, kann *prog1_test4.cpp* genutzt werden.
+
+
+```cpp
+#include "include/prog1.hpp"
+#include "gtest/gtest.h"
+
+TEST(Addition, failOne){
+	ASSERT_EQ(120000, add(60000,60000));
+	ASSERT_EQ(120000, add(60000,60000));
+}
+TEST(Addition, failTwo){
+	EXPECT_EQ(120000, add(60000,60000));
+	EXPECT_EQ(120000, add(60000,60000));
+}
+TEST(Addition, failThree){
+	ASSERT_EQ(120000, add(60000,60000));
+	EXPECT_EQ(120000, add(60000,60000));
+}
+TEST(Addition, failFour){
+	EXPECT_EQ(120000, add(60000,60000));
+	ASSERT_EQ(120000, add(60000,60000));
+}
+
+int main(int argc,char **argv){
+	::testing::InitGoogleTest(&argc,argv);
+	return RUN_ALL_TESTS();
+}
+```
+
+Nach Kompilierung und Ausführung sehen wir, dass failOne und failThree nur einen Fehler zurückmelden, wobei failTwo und failFour 4 fehler zurückmelden.
 
 
 ## Google Mock ##
