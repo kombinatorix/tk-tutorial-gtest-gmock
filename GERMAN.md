@@ -43,19 +43,33 @@ Mehr Informationen brauchen wir nicht für unseren ersten Test. Hierzu nutzen wi
 
 <table align="center">
 <tr>
-<td valign="top">
+<td>
 	prog1.hpp
-	<pre lang = "C++">
+</td>
+<td>
+	prog1.cpp
+</td>
+</tr>
+<tr>
+<td valign="top">
+	<pre lang = "C++" style="counter-reset:linecounter;">
 	#ifndef __prog1__hpp__
 	#define __prog1__hpp__
+
+
+	int add(short a, short b);
 
 	#endif	
 	</pre>
 </td>
 <td valign="top">
-	prog1.cpp
-	<pre lang = "C++">
+	<pre lang = "C++" style="counter-reset:linecounter;">
 	#include "include/prog1.hpp"	
+	#include <iostream>
+
+	int add(short a, short b){
+	    return static_cast< int >(a+b);
+	}
 	</pre>
 </td>
 </tr>
