@@ -90,14 +90,21 @@ int main(int argc,char **argv){
 	return RUN_ALL_TESTS();
 }
 ```
-```cpp
 
-```
 ```cpp
+#include "include/prog1.hpp"
+#include "gtest/gtest.h"
 
-```
-```cpp
+TEST(Addition, fail){
+	
+	ASSERT_EQ(120000, add(60000,60000));
+	
+}
 
+int main(int argc,char **argv){
+	::testing::InitGoogleTest(&argc,argv);
+	return RUN_ALL_TESTS();
+}
 ```
 
 ## Google Mock ##
