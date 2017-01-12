@@ -41,23 +41,27 @@ Dies muss der Benutzer selbst festlegen. Deshalb gibt es **2** Typen von Asserti
 
 Mehr Informationen brauchen wir nicht für unseren ersten Test. Hierzu nutzen wir ein erstes Beispielprogramm:
 
+<center>
 <table>
 <tr>
 <td>
+	prog1.hpp
 	<pre lang = "C++">
-	Test 1
-	foo
+	#ifndef __prog1__hpp__
+	#define __prog1__hpp__
+
+	#endif	
 	</pre>
 </td>
 <td>
+	prog2.cpp
 	<pre lang = "C++">
-	Test 2
-	bar
+	#include "include/prog1.hpp"	
 	</pre>
 </td>
 </tr>
 </table>
-
+</center>
 
 ## Google Mock ##
 
