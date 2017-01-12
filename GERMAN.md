@@ -299,7 +299,7 @@ Da wir jetzt ein Gefühl dafür bekommen haben, was eine Assertion ist und wie s
 | `ASSERT_STREQ(`_str1_`, `_str2_`);`    | `EXPECT_STREQ(`_str1_`, `_str_2`);`     | Beide C-Strings haben den gleichen Inhalt |
 | `ASSERT_STRNE(`_str1_`, `_str2_`);`    | `EXPECT_STRNE(`_str1_`, `_str2_`);`     | Beide C-Strings haben unterschiedliche Inhalte |
 | `ASSERT_STRCASEEQ(`_str1_`, `_str2_`);`| `EXPECT_STRCASEEQ(`_str1_`, `_str2_`);` | Beide C-Strings haben den gleichen Inhalte bei ignorierter Groß- und Kleinschreibung  |
-| `ASSERT_STRCASENE(`_str1_`, `_str2_`);`| `EXPECT_STRCASENE(`_str1_`, `_str2_`);` | Beide C-Strings unterschiedliche Inhalte bei ignorierter Groß- und KleinschreibungBeide C-Strings have different content, ignoring case |
+| `ASSERT_STRCASENE(`_str1_`, `_str2_`);`| `EXPECT_STRCASENE(`_str1_`, `_str2_`);` | Beide C-Strings unterschiedliche Inhalte bei ignorierter Groß- und Kleinschreibung |
 
 
 ## Google Mock ##
