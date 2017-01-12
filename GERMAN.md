@@ -162,7 +162,7 @@ den Namen der Binary.
 
 Gab es keine Probleme beim Kompilieren, kann das Testprogramm mit `./prog1_test1` ausgeführt werden. Es sollte dann folgenden Output geben:
 
-```bash
+```
 [==========] Running 1 test from 1 test case.
 [----------] Global test environment set-up.
 [----------] 1 test from Addition
@@ -202,7 +202,7 @@ g++ -isystem ${GTEST_DIR}/include -pthread prog1_test2.cpp libgtest.a -o prog1_t
 
 Ausgeführt sollte es dann diesen Output geben:
 
-```bash
+```
 [==========] Running 1 test from 1 test case.
 [----------] Global test environment set-up.
 [----------] 1 test from Addition
