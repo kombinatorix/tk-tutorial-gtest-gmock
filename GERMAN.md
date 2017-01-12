@@ -25,6 +25,19 @@ Wie man der Tabelle entnehmen kann, sieht die Struktur eines Minimalbeispiels wi
 	
 	Test program( Test case ( Test ( Assertion ( ... ) ) ) )
 
+Wir arbeiten uns nun von der kleinsten Einheiten, den Assertions, zu dem großen ganzen, dem Test program, vor.
+
+### Assertions ###
+
+Allgemein gesprochen eine Assertion eine vorn drei Zuständen zurückmelden: **success**, **nonfatal failure** und **fatal failure**
+
+Es ist zwar einfach einen Erfolg festzustellen, aber Google Test hat keine Möglichkeit abzuleiten, ob ein Fehler fatal ist oder nicht.
+Dies muss der Benutzer selbst festlegen. Deshalb gibt es **2** Typen von Assertions:
+|Typ|Erfolg|Fehler|
+|---|------|------|
+|** ASSERT_* **|succes|fatal failure|
+|** EXPECT_* **|succes|nonfatal failure|
+
 ## Google Mock ##
 
 
