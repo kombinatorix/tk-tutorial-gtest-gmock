@@ -63,8 +63,8 @@ Mehr Informationen brauchen wir nicht für unseren ersten Test. Hierzu nutzen wi
 	</pre>
 </td>
 <td valign="top">
-	<pre lang = "C++" style="counter-reset:linecounter;">
-	#include "include/prog1.hpp"	
+	<pre lang = "C++" style="counter-reset:line;">
+<code style="counter-increment:line;">	#include "include/prog1.hpp"<code>	
 	#include <iostream>
 
 	int add(short a, short b){
