@@ -276,12 +276,16 @@ Da wir jetzt ein Gefühl dafür bekommen haben, was eine Assertion ist und wie s
 
 #### Wahrheitswertige Assertions ####
 
+Hier wird nur darauf geprüft, ob die Bedingung den richtigen Wahrheitswert hat.
+
 | **Fatal assertion** | **Nonfatal assertion** | **Prüft** |
 |:--------------------|:-----------------------|:----------|
 | `ASSERT_TRUE(`_Bedingung_`)`;  | `EXPECT_TRUE(`_Bedingung_`)`;   | _Bedingung_ is wahr |
 | `ASSERT_FALSE(`_Bedingung_`)`; | `EXPECT_FALSE(`_Bedingung_`)`;  | _Bedingung_ is falsch |
 
 #### Binäre Vergleiche ####
+
+Hier geht es um den binären Vergleich von zwei Werten.
 
 | **Fatal assertion** | **Nonfatal assertion** | **Prüft** |
 |:--------------------|:-----------------------|:----------|
@@ -294,12 +298,34 @@ Da wir jetzt ein Gefühl dafür bekommen haben, was eine Assertion ist und wie s
 
 #### C-String Vergleiche ####
 
+Hier geht es explizit um C-Strings, da normale Strings mit den binären Vergleichen abgedeckt werden.
+
 | **Fatal assertion** | **Nonfatal assertion** | **Prüft** |
 |:--------------------|:-----------------------|:----------|
 | `ASSERT_STREQ(`_str1_`, `_str2_`);`    | `EXPECT_STREQ(`_str1_`, `_str_2`);`     | Beide C-Strings haben den gleichen Inhalt |
 | `ASSERT_STRNE(`_str1_`, `_str2_`);`    | `EXPECT_STRNE(`_str1_`, `_str2_`);`     | Beide C-Strings haben unterschiedliche Inhalte |
 | `ASSERT_STRCASEEQ(`_str1_`, `_str2_`);`| `EXPECT_STRCASEEQ(`_str1_`, `_str2_`);` | Beide C-Strings haben den gleichen Inhalte bei ignorierter Groß- und Kleinschreibung  |
 | `ASSERT_STRCASENE(`_str1_`, `_str2_`);`| `EXPECT_STRCASENE(`_str1_`, `_str2_`);` | Beide C-Strings unterschiedliche Inhalte bei ignorierter Groß- und Kleinschreibung |
+
+#### Explizite Rückgaben ####
+
+|Assertion|Ergebnis|
+|:--------|:-------|
+|SUCCEED();|success|
+|FAIL();|fatal failure|
+|ADD_FAILURE();|nonfatal failure|
+|ADD_FAILURE_AT(" Pfad_zur_Datei ", Zeilennummer );| nonfatal failure|
+
+#### Exception Assertions ####
+
+| **Fatal assertion** | **Nonfatal assertion** | **Verifies** |
+|:--------------------|:-----------------------|:-------------|
+| `ASSERT_THROW(`_Anweisung_, _exception\_type_`);`  | `EXPECT_THROW(`_Anweisung_, _exception\_type_`);`  | _Anweisung_ wirft eine Exception des gegebenen Typs  |
+| `ASSERT_ANY_THROW(`_Anweisung_`);`                | `EXPECT_ANY_THROW(`_Anweisung_`);`                | _Anweisung_ wirft eine Exception irgendeines Typs        |
+| `ASSERT_NO_THROW(`_Anweisung_`);`                 | `EXPECT_NO_THROW(`_Anweisung_`);`                 | _Anweisung_ wirft keine Exception            |
+
+Für weitere Assertions gucke [hier](https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#using-an-existing-boolean-function).
+
 
 
 ## Google Mock ##
