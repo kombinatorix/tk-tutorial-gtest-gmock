@@ -56,25 +56,34 @@ Mehr Informationen brauchen wir nicht für unseren ersten Test. Hierzu nutzen wi
 	#ifndef __prog1__hpp__
 	#define __prog1__hpp__
 
-
 	int add(short a, short b);
+
 
 	#endif	
 	</pre>
 </td>
 <td valign="top">
-	<pre lang = "C++">
+<pre lang = "C++">
 	#include "include/prog1.hpp"	
-	#include <iostream>
+	#include \<iostream\>
 
 	int add(short a, short b){
 	    return static_cast< int >(a+b);
 	}
-	</pre>
+</pre>
 </td>
 </tr>
 </table>
 
+```bash
+g++ -isystem ${GTEST_DIR}/include  -pthread -c prog1.cpp
+```
+
+```bash
+ar -rv libgtest.a prog1.o
+```
+
+**prog1_test1.cpp**:
 ```cpp
 #include "include/prog1.hpp"
 #include "gtest/gtest.h"
@@ -91,6 +100,12 @@ int main(int argc,char **argv){
 }
 ```
 
+```bash
+g++ -isystem ${GTEST_DIR}/include -pthread prog1_test1.cpp libgtest.a -o prog1_test1 -lgtest
+```
+
+
+**prog1_test1.cpp**:
 ```cpp
 #include "include/prog1.hpp"
 #include "gtest/gtest.h"
