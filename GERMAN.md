@@ -75,13 +75,26 @@ Mehr Informationen brauchen wir nicht für unseren ersten Test. Hierzu nutzen wi
 </tr>
 </table>
 
+Das Programm macht nichts anderes, als zwei shorts zu addieren und die Summe als Integer zurückzuliefern.
+Für das Programm, dass unsere Addition testet müssen wir noch eine statische Bibliothek erzeugen. Zuerst
+erstellen wir dafür eine Objektdation *.o*:
+
 ```bash
 g++ -isystem ${GTEST_DIR}/include  -pthread -c prog1.cpp
 ```
 
+Auch wer schon mal mit g++ ein Programm kompiliert hat, kennt nicht umbedingt das Flag `-isystem`. Mit diesem
+Flag können Pfade für Systemheader angegeben werden. Und in unserem Fall möchten wir die Google Test Header 
+nutzen.
+
+Nun haben wir eine Objektdatei. Jetzt möchten wir eine statische Bibliothek haben. Diese können wir mit `ar` erzeugen:
+
 ```bash
 ar -rv libgtest.a prog1.o
 ```
+
+Für weitere Informationen über `ar` kann man `man ar` in die Konsole eintippen.
+
 
 **prog1_test1.cpp**:
 ```cpp
@@ -105,7 +118,7 @@ g++ -isystem ${GTEST_DIR}/include -pthread prog1_test1.cpp libgtest.a -o prog1_t
 ```
 
 
-**prog1_test1.cpp**:
+**prog1_test2.cpp**:
 ```cpp
 #include "include/prog1.hpp"
 #include "gtest/gtest.h"
@@ -120,6 +133,10 @@ int main(int argc,char **argv){
 	::testing::InitGoogleTest(&argc,argv);
 	return RUN_ALL_TESTS();
 }
+```
+
+```bash
+g++ -isystem ${GTEST_DIR}/include -pthread prog1_test2.cpp libgtest.a -o prog1_test2 -lgtest
 ```
 
 ## Google Mock ##
