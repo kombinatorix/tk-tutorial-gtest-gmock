@@ -65,7 +65,7 @@ Mehr Informationen brauchen wir nicht für unseren ersten Test. Hierzu nutzen wi
 <td valign="top">
 <pre lang = "C++">
 	#include "include/prog1.hpp"	
-	#include \<iostream\>
+	#include < iostream >
 
 	int add(short a, short b){
 	    return static_cast< int >(a+b);
