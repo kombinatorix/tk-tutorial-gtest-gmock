@@ -41,6 +41,24 @@ Dies muss der Benutzer selbst festlegen. Deshalb gibt es **2** Typen von Asserti
 
 Mehr Informationen brauchen wir nicht für unseren ersten Test. Hierzu nutzen wir ein erstes Beispielprogramm:
 
+<table>
+<tr>
+<td>
+```
+Test 1
+foo
+```
+</td>
+<td>
+```
+Test 2
+bar
+```
+</td>
+</tr>
+</table>
+
+
 ## Google Mock ##
 
 
