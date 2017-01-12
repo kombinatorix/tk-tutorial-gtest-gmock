@@ -278,28 +278,28 @@ Da wir jetzt ein Gefühl dafür bekommen haben, was eine Assertion ist und wie s
 
 | **Fatal assertion** | **Nonfatal assertion** | **Prüft** |
 |:--------------------|:-----------------------|:----------|
-| `ASSERT_TRUE(`_condition_`)`;  | `EXPECT_TRUE(`_condition_`)`;   | _condition_ is true |
-| `ASSERT_FALSE(`_condition_`)`; | `EXPECT_FALSE(`_condition_`)`;  | _condition_ is false |
+| `ASSERT_TRUE(`_Bedingung_`)`;  | `EXPECT_TRUE(`_Bedingung_`)`;   | _Bedingung_ is wahr |
+| `ASSERT_FALSE(`_Bedingung_`)`; | `EXPECT_FALSE(`_Bedingung_`)`;  | _Bedingung_ is falsch |
 
 #### Binäre Vergleiche ####
 
 | **Fatal assertion** | **Nonfatal assertion** | **Prüft** |
 |:--------------------|:-----------------------|:----------|
-|`ASSERT_EQ(`_val1_`, `_val2_`);`|`EXPECT_EQ(`_val1_`, `_val2_`);`| _val1_ `==` _val2_ |
-|`ASSERT_NE(`_val1_`, `_val2_`);`|`EXPECT_NE(`_val1_`, `_val2_`);`| _val1_ `!=` _val2_ |
-|`ASSERT_LT(`_val1_`, `_val2_`);`|`EXPECT_LT(`_val1_`, `_val2_`);`| _val1_ `<` _val2_ |
-|`ASSERT_LE(`_val1_`, `_val2_`);`|`EXPECT_LE(`_val1_`, `_val2_`);`| _val1_ `<=` _val2_ |
-|`ASSERT_GT(`_val1_`, `_val2_`);`|`EXPECT_GT(`_val1_`, `_val2_`);`| _val1_ `>` _val2_ |
-|`ASSERT_GE(`_val1_`, `_val2_`);`|`EXPECT_GE(`_val1_`, `_val2_`);`| _val1_ `>=` _val2_ |
+|`ASSERT_EQ(`_Wert1_`, `_Wert2_`);`|`EXPECT_EQ(`_Wert1_`, `_Wert2_`);`| _Wert1_ `==` _Wert2_ |
+|`ASSERT_NE(`_Wert1_`, `_Wert2_`);`|`EXPECT_NE(`_Wert1_`, `_Wert2_`);`| _Wert1_ `!=` _Wert2_ |
+|`ASSERT_LT(`_Wert1_`, `_Wert2_`);`|`EXPECT_LT(`_Wert1_`, `_Wert2_`);`| _Wert1_ `<` _Wert2_ |
+|`ASSERT_LE(`_Wert1_`, `_Wert2_`);`|`EXPECT_LE(`_Wert1_`, `_Wert2_`);`| _Wert1_ `<=` _Wert2_ |
+|`ASSERT_GT(`_Wert1_`, `_Wert2_`);`|`EXPECT_GT(`_Wert1_`, `_Wert2_`);`| _Wert1_ `>` _Wert2_ |
+|`ASSERT_GE(`_Wert1_`, `_Wert2_`);`|`EXPECT_GE(`_Wert1_`, `_Wert2_`);`| _Wert1_ `>=` _Wert2_ |
 
 #### C-String Vergleiche ####
 
 | **Fatal assertion** | **Nonfatal assertion** | **Prüft** |
 |:--------------------|:-----------------------|:----------|
-| `ASSERT_STREQ(`_str1_`, `_str2_`);`    | `EXPECT_STREQ(`_str1_`, `_str_2`);`     | the two C strings have the same content |
-| `ASSERT_STRNE(`_str1_`, `_str2_`);`    | `EXPECT_STRNE(`_str1_`, `_str2_`);`     | the two C strings have different content |
-| `ASSERT_STRCASEEQ(`_str1_`, `_str2_`);`| `EXPECT_STRCASEEQ(`_str1_`, `_str2_`);` | the two C strings have the same content, ignoring case |
-| `ASSERT_STRCASENE(`_str1_`, `_str2_`);`| `EXPECT_STRCASENE(`_str1_`, `_str2_`);` | the two C strings have different content, ignoring case |
+| `ASSERT_STREQ(`_str1_`, `_str2_`);`    | `EXPECT_STREQ(`_str1_`, `_str_2`);`     | Beide C-Strings haben den gleichen Inhalt |
+| `ASSERT_STRNE(`_str1_`, `_str2_`);`    | `EXPECT_STRNE(`_str1_`, `_str2_`);`     | Beide C-Strings haben unterschiedliche Inhalte |
+| `ASSERT_STRCASEEQ(`_str1_`, `_str2_`);`| `EXPECT_STRCASEEQ(`_str1_`, `_str2_`);` | Beide C-Strings haben den gleichen Inhalte bei ignorierter Groß- und Kleinschreibung  |
+| `ASSERT_STRCASENE(`_str1_`, `_str2_`);`| `EXPECT_STRCASENE(`_str1_`, `_str2_`);` | Beide C-Strings unterschiedliche Inhalte bei ignorierter Groß- und KleinschreibungBeide C-Strings have different content, ignoring case |
 
 
 ## Google Mock ##
