@@ -136,7 +136,7 @@ TEST(NameDesTestCases, NameDiesesSpeziellenTest){
 ```
 
 Mit `NameDesTestCases` registriert man sozusagen den Test bei einem Test case. Danach gibt man den Namen des Tests an.
-Man sollte am besten auf Unterstriche `_` verzichten. Da Google Test vielfach Makros nutzt kann es durch ungeschickte 
+Man sollte am besten auf Unterstriche `_` verzichten ([Erklärung](https://github.com/google/googletest/blob/master/googletest/docs/FAQ.md#why-should-not-test-case-names-and-test-names-contain-underscore)). Da Google Test vielfach Makros nutzt kann es durch ungeschickte 
 Benennungen zu Uneindeutigkeiten und damit Fehlern beim kompilieren kommen.
 Erst dann kommt der eigentliche Code zu testen. In unserem einfachen Fall hatten wir:
 
@@ -326,7 +326,33 @@ Hier geht es explizit um C-Strings, da normale Strings mit den binären Vergleic
 
 Für weitere Assertions gucke [hier](https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#using-an-existing-boolean-function).
 
+#### Assertions in Subroutinen ####
 
+### Test Fixtures ###
+
+### Ergänzende Möglichkeiten Tests laufen zu lassen ###
+
+### Typisierte Tests ###
+
+### Typ-parametrisierte Tests ###
+
+### Wert-parametrisierte Test ###
+
+### Testen von privatem Code ###
+
+### Nette zusätzliche Features ###
+
+#### Fangen von Failures ####
+
+#### Der aktuelle Testname ####
+
+#### Logging des Tests ####
+
+#### Erweitern von Google Test durch Handling Test Events ####
+
+#### Den Output kontrollieren ####
+
+#### Death Tests ####
 
 ## Google Mock ##
 
