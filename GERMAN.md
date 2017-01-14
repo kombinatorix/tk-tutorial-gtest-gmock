@@ -328,6 +328,8 @@ Für weitere Assertions gucke [hier](https://github.com/google/googletest/blob/m
 
 #### Assertions in Subroutinen ####
 
+#### Death Tests ####
+
 #### Übungen zu Assertions ####
 
 Nun sollen einfache Tests mit Assertions geschrieben werden. 
@@ -543,6 +545,53 @@ int main(int argc,char **argv){
 
 ### Test Fixtures ###
 
+Je mehr Tests man schreibt, desto häufiger kommt es vor, dass man auf gleiche oder ähnliche Daten zugreift. Damit man diese
+nicht für jeden Test neu schreiben muss, kann man ein *Test Fixture* nutzen. Dies erlaubt die einfach Mehrfachnutzung.
+
+Um ein Test Fixture zu erzeugen, sind 5 Punkte zu beachten:
+
+1.	Leite das Fixture von `::testing::Test` ab.
+	*	Der Body muss mit `public:` oder `protected:` starten, da wir auf auf Member von Subklassen zugreifen werden.
+2.	In der Klasse müssen alle Objekte, die verwendet werden sollen, deklariert werden.
+3.	Wenn benötigt, dann muss man einen Default-Konstruktor oder `SetUp()` schreiben, damit die Objekte richtig initialisiert werden.
+	*	**C++ ist case-sensitive!** Achte darauf, dass du nicht `setup()` oder `Setup()` schreibst.
+4.	Wenn benötigt, dann muss man einen Default-Destruktor oder `TearDown()` schreiben, damit die Objekte richtig gelöscht werden.
+	*	Wann man Konstruktoren/Destruktoren nutzt und wann `SetUp()`/`TearDown()` kann [hier](https://github.com/google/googletest/blob/master/googletest/docs/FAQ.md#should-i-use-the-constructordestructor-of-the-test-fixture-or-the-set-uptear-down-function) nachgelesen werden.
+5.	Wenn benötigt, schreibe Subroutinen.
+
+Wie sieht also die Struktur einer Fixture-Klasse aus?
+
+```cpp
+class KlasseTest : public ::testing::Test{
+	protected: // kann auch public sein
+		virtual void SetUp(){
+
+			// Code
+
+		}
+
+		virtual void TearDown(){
+
+			// Code
+
+		}
+
+		// Deklarierung der Variablen
+}
+``` 
+
+Jetzt muss das Google Test auch wissen, dass wir das Test Fixture für einen Test nutzen wollen, deshalb ersetzen wir `TEST` durch `TEST_F`, das führt dan zu:
+
+```cpp
+TEST_F(KlasseTest, Testname){
+
+	// Code
+
+}
+```
+
+Beachte, dass `KlasseTest` dem Namen der Fixture-Klasse entspricht.
+
 ### Ergänzende Möglichkeiten Tests laufen zu lassen ###
 
 ### Typisierte Tests ###
@@ -564,8 +613,6 @@ int main(int argc,char **argv){
 #### Erweitern von Google Test durch Handling Test Events ####
 
 #### Den Output kontrollieren ####
-
-#### Death Tests ####
 
 ## Google Mock ##
 
