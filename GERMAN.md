@@ -328,6 +328,219 @@ Für weitere Assertions gucke [hier](https://github.com/google/googletest/blob/m
 
 #### Assertions in Subroutinen ####
 
+#### Übungen zu Assertions ####
+
+Nun sollen einfache Tests mit Assertions geschrieben werden. 
+
+##### Übung 1 #####
+Die erste Übung soll überprüfen, ob das Sortieren eines Vectors klappt.
+ 
+<table align="center">
+<tr>
+<td>
+	exercise1.hpp
+</td>
+<td>
+	exercise1.cpp
+</td>
+</tr>
+<tr>
+<td valign="top">
+	<pre lang = "C++">
+#ifndef __example1__hpp__
+#define __example1__hpp__
+
+#include < vector >
+#include < stdlib.h >
+#include < time.h >
+
+class goodandbadsort{
+private:
+	std::vector<int> randomNumbers;
+public:
+	goodandbadsort(int n);
+	
+	
+	
+	
+
+	~goodandbadsort();
+
+	std::vector<int> goodSort();
+
+
+
+
+
+	std::vector<int> badSort();
+
+
+};
+
+#endif
+	</pre>
+</td>
+<td valign="top">
+<pre lang = "C++">
+
+
+
+#include "include/exercise1.hpp"
+#include < algorithm >
+
+
+
+
+
+
+goodandbadsort::goodandbadsort(int n){
+		srand(time(NULL));
+		for(int i=0; i<n; ++i){
+			this->randomNumbers.push_back(rand() % 100);
+		}
+}
+
+goodandbadsort::~goodandbadsort(){}
+
+std::vector<int> goodandbadsort::goodSort(){
+	std::vector<int> tempVec = this->randomNumbers;
+	 std::sort(tempVec.begin(),tempVec.end());
+	return tempVec;
+}
+
+std::vector<int> goodandbadsort::badSort(){
+	return this->randomNumbers;
+}
+
+</pre>
+</td>
+</tr>
+</table>
+
+Es sollen 3 Tests für einen 10 Elemente großen Vektor geschrieben werden:
+
+1.	Sortiert **goodSort** aufsteigend?
+2.	Sortiert **badSort** aufsteigen?
+3.	Überprüfe **badSort** durch **goodSort**.
+
+Für den Test kann folgende Vorlage (*exercise1_test.cpp*) genutzt werden:
+
+```cpp
+#include "include/exercise1.hpp"
+#include "gtest/gtest.h"
+
+TEST(Sortierung, guteSortierung){
+	// ausfuellen
+}
+
+TEST(Sortierung, schlechteSortierung){
+	// ausfuellen
+}
+
+TEST(Sortierung, Vergleich){
+	// ausfuellen
+}
+
+int main(int argc,char **argv){
+    ::testing::InitGoogleTest(&argc,argv);
+    return RUN_ALL_TESTS();
+}
+```
+
+Eine Beispiellösung stellt die *exercise1_test_solution.cpp* zur Verfügung.
+
+##### Übung 2 #####
+
+Einen wichtigen Bereich, den Tests immer abdecken sollen, ist die Überprüfung der Eingangsdaten.
+So will man grundsätzlich, dass eine Funktion, falls sie **NULL** übergeben bekommt, eine Exception schmeißt.
+
+<table align="center">
+<tr>
+<td>
+	exercise2.hpp
+</td>
+<td>
+	exercise2.cpp
+</td>
+</tr>
+<tr>
+<td valign="top">
+<pre lang = "C++">
+#ifndef __exercise2__hpp__
+#define __exercise2__hpp__
+
+#include < exception >
+struct NULLException : public std::exception {
+	const char * what () const throw () {
+		return "NULL Exception";
+	}
+};
+
+void throws(int* a);
+
+
+
+
+
+void throwsNot(int* a);
+
+#endif
+</pre>
+</td>
+<td valign="top">
+<pre lang = "C++">
+
+
+
+#include "include/exercise2.hpp"
+
+
+
+
+
+
+void throws(int* a){
+	if(!a){
+		throw NULLException();
+	}
+}
+
+void throwsNot(int* a){}
+
+
+</pre>
+</td>
+</tr>
+</table>
+
+Schreibe 2 Tests:
+
+1. Überprüfe, ob throws eine NULLException wirft.
+2. Überprüfe, ob throwsNot eine NULLException wirft.
+
+Nutze dazu die Vorlage (*excercise2_test.cpp*):
+
+```cpp
+#include "include/exercise2.hpp"
+#include "gtest/gtest.h"
+
+TEST(NULLException, throwsException){
+	int* ptr = nullptr;
+	// ausfuellen
+}
+
+TEST(Sortierung, throwsNoException){
+	int* ptr = nullptr;
+	// ausfuellen
+}
+
+
+int main(int argc,char **argv){
+    ::testing::InitGoogleTest(&argc,argv);
+    return RUN_ALL_TESTS();
+}
+```
+
 ### Test Fixtures ###
 
 ### Ergänzende Möglichkeiten Tests laufen zu lassen ###
