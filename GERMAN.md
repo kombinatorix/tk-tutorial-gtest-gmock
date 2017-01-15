@@ -594,25 +594,144 @@ Beachte, dass `KlasseTest` dem Namen der Fixture-Klasse entspricht.
 
 ### Ergänzende Möglichkeiten Tests laufen zu lassen ###
 
-### Typisierte Tests ###
+Google Test lässt grundsätzlich alle Tests durchlaufen. Das ist aber gerade für größere Projekte nicht immer sinnvoll. Um das Verhalten der Tests zu ändern, gibt es es Flags, die man im Quellcode setzen kann. Zusätzlich lassen sich alle Flags auch über die Kommandozeile überschreiben.
 
-### Typ-parametrisierte Tests ###
+Die zur Verfügung stehenden Flag erhält man, indem man an den ausführbaren Test das Flag `--help`, `-h`, `-?` oder `/?` anhängt.
+
+Will man das Flag `--gtest_foo` in der main-Funktion lesen oder setzen, geschieht dies über `::testing::GTEST_FLAG(foo)`.
+Prototypisch sieht es so aus:
+
+```cpp
+int main(int argc, char** argv) {
+  // Schaltet das foo-Flag aus
+  ::testing::GTEST_FLAG(foo) = false;
+
+  // Hier können die gesetzten Flags über die Kommandozeile überschrieben werden.
+  ::testing::InitGoogleTest(&argc, argv);
+
+  return RUN_ALL_TESTS();
+}
+```
+
+Für die [Testauswahl](#testauswahl) sind folgende Flags verfügbar:
+
+1.	`--gtest_list_tests`
+2.	`--gtest_filter=POSTIVE_PATTERNS[-NEGATIVE_PATTERNS]`
+3.  `--gtest_also_run_disabled_tests`
+
+Für die [Testausführung](#testausführung) sind folgende Flags verfügbar:
+
+1.	`--gtest_repeat=[COUNT]`
+2.	`--gtest_shuffle`
+3.	`--gtest_random_seed=[NUMBER]`
+
+Für den Testoutput sind folgende Flags verfügbar:
+
+1.	`--gtest_color=(yes|no|auto)`
+2.	`--gtest_print_time=0`
+3.	`--gtest_output=xml[:DIRECTORY_PATH/|:FILE_PATH]`
+4.	`--gtest_stream_result_to=HOST:PORT`
+
+Für Assertionverhalten sind folgende Flags verfügbar:
+
+1.	`--gtest_death_test_style=(fast|threadsafe)`
+2.	`--gtest_break_on_failure`
+3.	`--gtest_throw_on_failure`
+4.	`--gtest_catch_exceptions=0`
+
+#### Testauswahl ####
+
+Das Flag `--gtest_list_tests` überschreibt alle anderen Flags und der Output sieht dann wie folgt aus:
+
+```
+TestCase1.
+	TestName1
+	TestName2
+	TestName3
+	...
+	TestNameL
+...
+TestCaseM.
+	TestName1
+	TestName2
+	...
+	TestNameN
+```
+
+Mit dem Flag `--gtest_filter` kann gesteuert werden welche Test ausgeführt werden sollen. Zur besseren Kontrolle gibt es besondere Zeichen:
+
+| Zeichen | Effekt |
+|:--------|:-------|
+|`?`| Entspricht einem beliebigen Zeichen |
+|`*`| Entspricht einem beliebigen String |
+|`-`| Schließt das nachfolgende Muster vom Test aus |
+|`:`| Teilt Wildcard-Muster. Kann auch von einem `-` und einem `:` gefolgt werden (Negative Muster-Liste) |
+
+Im folgenden gibt es ein paar Beispiele mit Effekt:
+
+| Kommandozeile | Auswirkung |
+|:--------------|:-----------|
+|`./test` | Führt alle Tests aus. |
+|`./test --gtest_filter=*` | Führt alle Tests aus. |
+|`./test --gtest_filter=TestCase.*` | Führt alle Tests aus dem Test Case *TestCase* aus. |
+|`./test --gtest_filter=*Foo*:*Bar*` | Führt alle Tests aus, die entweder *Foo* oder *Bar* enthalten. |
+|`./test --gtest_filter=-*Foo*` | Führt alle Tests aus, die kein *Foo* beinhalten. |
+|`./test --gtest_filter=TestCase.*-TestCase.Foo` | Führt alle Tests aus dem Test Case *TestCase* bis auf *Foo* aus. |
+
+Mit dem Flag `--gtest_also_run_disabled_tests` werden auch ausgeschaltete Test ausgeführt. Manchmal ist ein Test in sich kaputt und soll ausgeschaltet werden.
+Dies geht mit dem Präfix `DISABLED`:
+
+```cpp
+TEST(FooTest, DISABLED_Test) { ... }
+
+class DISABLED_BarTest : public ::testing::Test { ... };
+
+TEST_F(DISABLED_BarTest, Test) { ... }
+```
+
+#### Testausführung ####
+
+Manchmal muss man einen Test öfters ausführen. Z.B. hat man mehrere Threads und es könnten Raceconditions auftreten. Diese treten nicht immer auf, deshalb testet man öfter.
+Dies kann mit `--gtest_repeat=Anzahl` realisiert werden. Ist `Anzahl` negativ, dann wird der Test ewig wiederholt.
+
+Es kann auch angehen, dass Tests Abhängigkeiten aufweisen. Um diese aufzudecken, kann man die Tests zufällig durchführen. Dies wird mit `--gtest_shuffle` bewerkstelligt.
+Möchte man immer die gleiche zufällige Reihenfolge haben, so kann man das Flag `--gtest_random_seed=SEED` nutzen. Dabei muss `SEED` eine natürliche Zahl zwischen 0 un 99999 sein. Die 0 ist besonders. Sie sagt, dass das Default-Verhalten durchgeführt werden soll. In diesem Verhalten wird der SEED aus der aktuellen Zeit berechnet.
+
+In Kombination mit `--gtest_repeat=N` wird in jeder Durchführung eine anderer zufällige SEED gewählt.  
 
 ### Wert-parametrisierte Test ###
 
+[Fürs erste hier](https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#value-parameterized-tests)
+
+### Typisierte Tests ###
+
+[Fürs erste hier](https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#typed-tests)
+
+### Typ-parametrisierte Tests ###
+
+[Fürs erste hier](https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#type-parameterized-tests)
+
+
 ### Testen von privatem Code ###
+
+[Fürs erste hier](https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#testing-private-code)
 
 ### Nette zusätzliche Features ###
 
+
 #### Fangen von Failures ####
+
+[Fürs erste hier](https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#catching-failures)
 
 #### Der aktuelle Testname ####
 
-#### Logging des Tests ####
+[Fürs erste hier](https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#getting-the-current-tests-name)
+
 
 #### Erweitern von Google Test durch Handling Test Events ####
 
-#### Den Output kontrollieren ####
+[Fürs erste hier](https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#extending-google-test-by-handling-test-events)
+
 
 ## Google Mock ##
 
