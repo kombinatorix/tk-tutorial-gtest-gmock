@@ -21,23 +21,23 @@ Für Google Test ist die Struktur in der folgenden Tabelle aufgeführt.
 | Test fixture | Setzt die Umgebung(svariablen), so dass Tests dies nicht immer selbst machen müssen.           |
 | Test program | Besteht aus mindestens einem Testcase. Lässt diese durchlaufen.                                | 
 
-Wie man der Tabelle entnehmen kann, sieht die Struktur eines Minimalbeispiels wie folgt aus.
+Wie man der Tabelle entnehmen kann, sieht die Struktur eines Minimalbeispiels wie folgt aus:
 	
 	Test program( Test case ( Test ( Assertion ( ... ) ) ) )
 
-Wir arbeiten uns nun von der kleinsten Einheiten, den Assertions, zu dem großen ganzen, dem Test program, vor.
+Wir arbeiten uns nun von der kleinsten Einheiten, den Assertions, zu dem großen Ganzen - dem Testprogramm - vor.
 
 ### Assertions ###
 
-Allgemein gesprochen eine Assertion eine vorn drei Zuständen zurückmelden: **success**, **nonfatal failure** und **fatal failure**.
+Allgemein gesprochen ist eine Assertion eine Bedingungsüberprüfung, die eine von drei Zuständen zurückmelden: **success**, **nonfatal failure** oder **fatal failure**.
 
-Es ist zwar einfach einen Erfolg festzustellen, aber Google Test hat keine Möglichkeit abzuleiten, ob ein Fehler fatal ist oder nicht.
+Es ist zwar einfach, einen Erfolg festzustellen, aber Google Test hat keine Möglichkeit abzuleiten, ob ein Fehler fatal ist oder nicht.
 Dies muss der Benutzer selbst festlegen. Deshalb gibt es **2** Typen von Assertions:
 
 |Typ     |Erfolg|Fehler          |
 |:-------|:-----|:---------------|
-| ASSERT |succes|fatal failure   |
-| EXPECT |succes|nonfatal failure|
+| ASSERT |success|fatal failure   |
+| EXPECT |success|nonfatal failure|
 
 Mehr Informationen brauchen wir nicht für unseren ersten Test. Hierzu nutzen wir ein erstes Beispielprogramm:
 
@@ -76,7 +76,7 @@ Mehr Informationen brauchen wir nicht für unseren ersten Test. Hierzu nutzen wi
 </table>
 
 Das Programm macht nichts anderes, als zwei shorts zu addieren und die Summe als Integer zurückzuliefern.
-Für das Programm, dass unsere Addition testet müssen wir noch eine statische Bibliothek erzeugen. Zuerst
+Für das Programm, dass unsere Addition testet, müssen wir noch eine statische Bibliothek erzeugen. Zuerst
 erstellen wir dafür eine Objektdatei *.o*:
 
 ```bash
@@ -86,7 +86,7 @@ g++ -isystem ${GTEST_DIR}/include -pthread -c prog1.cpp
 Auch wer schon mal mit g++ ein Programm kompiliert hat, kennt nicht umbedingt das Flag `-isystem`. Mit diesem
 Flag können Pfade für Systemheader angegeben werden. Und in unserem Fall möchten wir die Google Test Header 
 nutzen.
-Außerdem nutzen wir das Flag `-pthread`, da Google Test gebrauch von threads macht.
+Außerdem nutzen wir das Flag `-pthread`, da Google Test Gebrauch von Threads macht.
 
 Nun haben wir eine Objektdatei. Jetzt möchten wir eine statische Bibliothek haben. Diese können wir mit `ar` erzeugen:
 
@@ -94,7 +94,7 @@ Nun haben wir eine Objektdatei. Jetzt möchten wir eine statische Bibliothek hab
 ar -rv libgtest.a prog1.o
 ```
 
-Für weitere Informationen über `ar` führe `man ar` der Konsole aus.
+Für weitere Informationen über `ar` führe `man ar` in der Konsole aus.
 
 Kommen wir nun zu unserem ersten Testprogram (*prog1_test1.cpp*):
 ```cpp
@@ -135,9 +135,8 @@ TEST(NameDesTestCases, NameDiesesSpeziellenTest){
 }
 ```
 
-Mit `NameDesTestCases` registriert man sozusagen den Test bei einem Test case. Danach gibt man den Namen des Tests an.
-Man sollte am besten auf Unterstriche `_` verzichten ([Erklärung](https://github.com/google/googletest/blob/master/googletest/docs/FAQ.md#why-should-not-test-case-names-and-test-names-contain-underscore)). Da Google Test vielfach Makros nutzt kann es durch ungeschickte 
-Benennungen zu Uneindeutigkeiten und damit Fehlern beim kompilieren kommen.
+Mit `NameDesTestCases` registriert man den folgenden Test beim Test case. Danach gibt man den Namen des Tests an.
+Man sollte am besten auf Unterstriche `_` verzichten ([Erklärung](https://github.com/google/googletest/blob/master/googletest/docs/FAQ.md#why-should-not-test-case-names-and-test-names-contain-underscore)).  
 Erst dann kommt der eigentliche Code zu testen. In unserem einfachen Fall hatten wir:
 
 ```cpp
@@ -147,7 +146,7 @@ Erst dann kommt der eigentliche Code zu testen. In unserem einfachen Fall hatten
 Der Befehl `ASSERT_EQ( ... , ... )` prüft, ob das erste Argument mit dem zweiten übereinstimmt. Dabei ist die Reihenfolge
 egal.
 
-Der Code, der in der main-Funktion steht ist ziemlich selbsterklärend. Bis aufs weitere ist er immer der selbe. Erst später
+Der Code, der in der main-Funktion steht, ist ziemlich selbsterklärend. Bis auf wenige Zusätze bleibt dieser Code immer der selbe. Später
 wird noch einmal darauf eingegangen.
 
 Als nächstes muss das Testprogramm kompiliert werden. Dies geschieht mit:
@@ -175,8 +174,8 @@ Gab es keine Probleme beim Kompilieren, kann das Testprogramm mit `./prog1_test1
 [  PASSED  ] 1 test.
 ```
 
-Damit lief unser Test ohne Probleme durch. Das ist schön, aber wir haben noch nicht alle Fälle abgedeckt. So haben wir in unserem ursprünglichen unseren
-Input nicht überprüft. Dies kann zu überläufen führen. Dies wird in *prog1_test2.cpp* überprüft:
+Damit lief unser Test ohne Probleme durch. Das ist schön, aber wir haben noch nicht alle Fälle abgedeckt. So haben wir unseren
+Input nicht überprüft. Dies kann zu Überläufen führen. Dies wird in *prog1_test2.cpp* überprüft:
 
 ```cpp
 #include "include/prog1.hpp"
@@ -225,14 +224,15 @@ To be equal to: add(60000,60000)
 
 Unser Test schlägt hier fehl. Aber Google Test versorgt uns mit mehr Informationen. So sehen an welcher Stelle (`prog1_test2.cpp:6: Failure`) das Programm fehlschlug. Außerdem wird uns gezeigt, welche Wert erwartet wurde und welchen Wert wir tatsächlich bekommen.
 
-Ein weiteres nützliches Feature ist, dass man bei einer Assertion eine eigene Fehlermeldung mit dem Streamoperator anhängen kann. Siehe dazu das Testprogramm *prog1_test3.cpp*:
+Ein weiteres nützliches Feature ist, dass man bei einer Assertion eine eigene Fehlermeldung mit dem Streamoperator anhängen kann. Siehe dazu das Beispielprogramm *prog1_test3.cpp*:
 
 ```cpp
 // ...
 
 TEST(Addition, fail){
 	
-	ASSERT_EQ(120000, add(60000,60000)) << "Hier gab es einen Bufferüberlauf und damit ein falsches Ergebnis von: " << add(60000,60000);
+	ASSERT_EQ(120000, add(60000,60000)) << "Hier gab es einen Bufferüberlauf und damit 
+											ein falsches Ergebnis von: " << add(60000,60000);
 	
 }
 
@@ -335,7 +335,7 @@ Für weitere Assertions gucke [hier](https://github.com/google/googletest/blob/m
 Nun sollen einfache Tests mit Assertions geschrieben werden. 
 
 ##### Übung 1 #####
-Die erste Übung soll überprüfen, ob das Sortieren eines Vectors klappt.
+Die erste Übung soll überprüfen, ob das Sortieren eines Vektors klappt.
  
 <table align="center">
 <tr>
@@ -454,7 +454,7 @@ Eine Beispiellösung stellt die *exercise1_test_solution.cpp* zur Verfügung.
 ##### Übung 2 #####
 
 Einen wichtigen Bereich, den Tests immer abdecken sollen, ist die Überprüfung der Eingangsdaten.
-So will man grundsätzlich, dass eine Funktion, falls sie **NULL** übergeben bekommt, eine Exception schmeißt.
+So will man grundsätzlich, dass eine Funktion, falls sie **NULL** bzw einen **nullptr** übergeben bekommt, eine Exception schmeißt.
 
 <table align="center">
 <tr>
@@ -546,7 +546,7 @@ int main(int argc,char **argv){
 ### Test Fixtures ###
 
 Je mehr Tests man schreibt, desto häufiger kommt es vor, dass man auf gleiche oder ähnliche Daten zugreift. Damit man diese
-nicht für jeden Test neu schreiben muss, kann man ein *Test Fixture* nutzen. Dies erlaubt die einfach Mehrfachnutzung.
+nicht für jeden Test neu definieren muss, kann man ein *Test Fixture* nutzen. Dies erlaubt die einfach Mehrfachnutzung.
 
 Um ein Test Fixture zu erzeugen, sind 5 Punkte zu beachten:
 
@@ -592,17 +592,20 @@ TEST_F(KlasseTest, Testname){
 
 Beachte, dass `KlasseTest` dem Namen der Fixture-Klasse entspricht.
 
+##### Übung 3 #####
+
 ### Ergänzende Möglichkeiten Tests laufen zu lassen ###
 
-Google Test lässt grundsätzlich alle Tests durchlaufen. Das ist aber gerade für größere Projekte nicht immer sinnvoll. Um das Verhalten der Tests zu ändern, gibt es es Flags, die man im Quellcode setzen kann. Zusätzlich lassen sich alle Flags auch über die Kommandozeile überschreiben.
+Google Test lässt grundsätzlich alle Tests durchlaufen. Das ist aber gerade für größere Projekte nicht immer sinnvoll. Um das Verhalten des Testprogramms zu ändern, gibt es es Flags, die man im Quellcode setzen kann. Zusätzlich lassen sich alle Flags auch über die Kommandozeile überschreiben.
 
-Die zur Verfügung stehenden Flag erhält man, indem man an den ausführbaren Test das Flag `--help`, `-h`, `-?` oder `/?` anhängt.
+Die zur Verfügung stehenden Flag erhält man, indem man an das ausführbare Testprogramm das Flag `--help`, `-h`, `-?` oder `/?` anhängt.
 
 Will man das Flag `--gtest_foo` in der main-Funktion lesen oder setzen, geschieht dies über `::testing::GTEST_FLAG(foo)`.
 Prototypisch sieht es so aus:
 
 ```cpp
 int main(int argc, char** argv) {
+
   // Schaltet das foo-Flag aus
   ::testing::GTEST_FLAG(foo) = false;
 
@@ -639,6 +642,8 @@ Für Assertionverhalten sind folgende Flags verfügbar:
 3.	`--gtest_throw_on_failure`
 4.	`--gtest_catch_exceptions=0`
 
+
+
 #### Testauswahl ####
 
 Das Flag `--gtest_list_tests` überschreibt alle anderen Flags und der Output sieht dann wie folgt aus:
@@ -658,7 +663,7 @@ TestCaseM.
 	TestNameN
 ```
 
-Mit dem Flag `--gtest_filter` kann gesteuert werden welche Test ausgeführt werden sollen. Zur besseren Kontrolle gibt es besondere Zeichen:
+Mit dem Flag `--gtest_filter` kann gesteuert werden, welche Test ausgeführt werden sollen. Zur besseren Kontrolle gibt es reservierte Zeichen:
 
 | Zeichen | Effekt |
 |:--------|:-------|
@@ -689,32 +694,126 @@ class DISABLED_BarTest : public ::testing::Test { ... };
 TEST_F(DISABLED_BarTest, Test) { ... }
 ```
 
+**HINWEIS**: Ein `-` negiert **alles** was dahinter steht, auch was durch `:` abgetrennt wird! Das ist ein Fehler in den ich gelaufen bin. 
+
+##### Übung 4 #####
+
+Ergänze das folgende Testprogramm (*exercise4_test.cpp*) so, dass es die Test wegfiltert, die fehlschlagen.
+
+```cpp
+#include "gtest/gtest.h"
+
+TEST(Case1, Test1){
+	SUCCEED();
+}
+TEST(Case1, Test2){
+	SUCCEED();
+}
+TEST(Case1, Test3){
+	FAIL();
+}
+TEST(Case1, Test4){
+	SUCCEED();
+}
+
+TEST(Case2, Test1FAIL){
+	FAIL();
+}
+TEST(Case2, Test2SUCCEED){
+	SUCCEED();
+}
+TEST(Case2, Test3FAIL){
+	FAIL();
+}
+TEST(Case2, Test4FAIL){
+	FAIL();
+}
+TEST(Case2, Test5SUCCEED){
+	SUCCEED();
+}
+
+TEST(TOTALFAIL, Test1){
+	FAIL();
+}
+TEST(TOTALFAIL, Test2){
+	FAIL();
+}
+TEST(TOTALFAIL, Test3){
+	FAIL();
+}
+
+int main(int argc,char **argv){
+
+	// Hier den Filter einfügen.
+	
+	::testing::InitGoogleTest(&argc,argv);
+    return RUN_ALL_TESTS();
+}
+```
+
 #### Testausführung ####
 
 Manchmal muss man einen Test öfters ausführen. Z.B. hat man mehrere Threads und es könnten Raceconditions auftreten. Diese treten nicht immer auf, deshalb testet man öfter.
 Dies kann mit `--gtest_repeat=Anzahl` realisiert werden. Ist `Anzahl` negativ, dann wird der Test ewig wiederholt.
 
 Es kann auch angehen, dass Tests Abhängigkeiten aufweisen. Um diese aufzudecken, kann man die Tests zufällig durchführen. Dies wird mit `--gtest_shuffle` bewerkstelligt.
-Möchte man immer die gleiche zufällige Reihenfolge haben, so kann man das Flag `--gtest_random_seed=SEED` nutzen. Dabei muss `SEED` eine natürliche Zahl zwischen 0 un 99999 sein. Die 0 ist besonders. Sie sagt, dass das Default-Verhalten durchgeführt werden soll. In diesem Verhalten wird der SEED aus der aktuellen Zeit berechnet.
+Möchte man immer die gleiche zufällige Reihenfolge haben, so kann man das Flag `--gtest_random_seed=SEED` nutzen. Dabei muss `SEED` eine natürliche Zahl zwischen 0 un 99999 sein. Die 0 ist besonders. Sie sagt, dass das Default-Verhalten durchgeführt werden soll. In diesem Verhalten wird der `SEED` aus der aktuellen Zeit berechnet.
 
-In Kombination mit `--gtest_repeat=N` wird in jeder Durchführung eine anderer zufällige SEED gewählt.  
+In Kombination mit `--gtest_repeat=N` wird in jeder Durchführung ein zufälliger oder der gewählte `SEED` um 1 inkrementiert..  
+
+##### Übung 5 #####
+
+Als kleine Übung soll der das nächste Testprogramm (*exercise5_test.cpp*) 3 mal ausgeführt werden, startend mit einem `SEED` von 3.
+
+```cpp
+#include "gtest/gtest.h"
+
+TEST(Case1, Test1){
+	SUCCEED();
+}
+TEST(Case1, Test2){
+	SUCCEED();
+}
+TEST(Case1, Test3){
+	SUCCEED();
+}
+TEST(Case1, Test4){
+	SUCCEED();
+}
+
+int main(int argc,char **argv){
+
+	// Hier die Flags setzen
+
+	::testing::InitGoogleTest(&argc,argv);
+    return RUN_ALL_TESTS();
+}
+```
+
 
 ### Wert-parametrisierte Test ###
 
 [Fürs erste hier](https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#value-parameterized-tests)
 
+##### Übung 6 #####
+
 ### Typisierte Tests ###
 
 [Fürs erste hier](https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#typed-tests)
+
+##### Übung 7 #####
 
 ### Typ-parametrisierte Tests ###
 
 [Fürs erste hier](https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#type-parameterized-tests)
 
+##### Übung 8 #####
 
 ### Testen von privatem Code ###
 
 [Fürs erste hier](https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#testing-private-code)
+
+##### Übung 9 #####
 
 ### Nette zusätzliche Features ###
 
@@ -722,6 +821,7 @@ In Kombination mit `--gtest_repeat=N` wird in jeder Durchführung eine anderer z
 #### Fangen von Failures ####
 
 [Fürs erste hier](https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#catching-failures)
+
 
 #### Der aktuelle Testname ####
 
