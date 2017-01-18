@@ -2,7 +2,7 @@
 
 Damit wir uns Tipparbeit sparen, wird die Variable `${GTEST_DIR}` mit dem Pfad zum googletest-Ordner gesetzt. Dazu füge in der `~/.bashrc` folgende Zeile hinzu.
 
-	export GTEST_DIR = Pfad/zum/Ordner
+	export GTEST_DIR = Pfad/zum/Ordner/googletest/googletest/
 
 Danach musst du in der Kommandozeile einmal `source ~/.bashrc` ausführen, damit der Befehl geladen wird.
 
