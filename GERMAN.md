@@ -901,7 +901,17 @@ Es gibt folgende Möglichkeiten Parameter feszulegen:
 | `ValuesIn(container)` und `ValuesIn(start, ende)` | Stellt Werte aus einem C-style array, einem STL-style container oder der Iterator range `[start, ende)`. `container`, `start` und `ende` können Ausrücke sein, die zur Laufzeit bestimmt werden.  |
 | `Bool()`                    | Hält die Werte `{false, true}` vor.                                                                                  |
 | `Combine(g1, g2, ..., gN)`  | Generiert das kartesische Produkt der Tupel. Dies steht nur zur Verfügung, wenn das System den `<tr1/tuple>` Header zur Verfügung stellt. Wenn man sich sicher ist, dass man diesen hat, obwohl gtest dies verneint, kann man die Verwendung mit `GTEST_HAS_TR1_TUPLE=1` erzwingen. |
+
+Jetzt können die Parametriesierung Erzeugen mit:
+
+```cpp
+INSTANTIATE_TEST_CASE_P(InstantiationName,
+                        TestCaseName,
+                        ::testing::Values("Tick", "Trick", "Track"));
+```
+
 ##### Übung 6 #####
+
 
 ### Typisierte Tests ###
 
@@ -940,3 +950,5 @@ Es gibt folgende Möglichkeiten Parameter feszulegen:
 
 
 ## Google Mock ##
+
+
