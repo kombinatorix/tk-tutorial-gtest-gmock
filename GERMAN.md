@@ -594,6 +594,89 @@ Beachte, dass `KlasseTest` dem Namen der Fixture-Klasse entspricht.
 
 ##### Übung 3 #####
 
+Ergänze die Datei *exercise3.hpp* so, dass die Tests in *exercise3_test.cpp* durchlaufen.
+
+<table align="center">
+<tr>
+<td>
+	exercise3.hpp
+</td>
+<td>
+	exercise3.cpp
+</td>
+<td>
+	exercise3_test.cpp
+</td>
+</tr>
+<tr>
+<td valign="top">
+<pre lang = "C++">
+#include <string>
+#include "gtest/gtest.h"
+
+class StringCombination // {
+	protected:
+
+		//
+		//
+		//
+		std::string concatenate1();
+		
+		
+		std::string concatenate2();
+		
+		std::string foo;
+		std::string bar;
+};
+</pre>
+</td>
+<td valign="top">
+<pre lang = "C++">
+#include "include/exercise3.hpp"
+
+
+
+
+
+
+
+
+std::string StringCombination::concatenate1(){
+	return this->foo+this->bar;
+}
+std::string StringCombination::concatenate2(){
+	return this->bar+this->foo;
+}
+
+
+</pre>
+</td>
+<td valign="top">
+<pre lang = "C++">
+#include "include/exercise3.hpp"
+#include "gtest/gtest.h"
+
+
+TEST_F(StringCombination, FooBar){
+	ASSERT_EQ("FooBar",concatenate1());	
+}
+
+TEST_F(StringCombination, BarFoo){
+	ASSERT_EQ("BarFoo",concatenate2());	
+}
+
+int main(int argc,char **argv){
+
+	::testing::InitGoogleTest(&argc,argv);
+    return RUN_ALL_TESTS();
+}
+
+</pre>
+</td>
+</tr>
+</table>
+
+
 ### Ergänzende Möglichkeiten Tests laufen zu lassen ###
 
 Google Test lässt grundsätzlich alle Tests durchlaufen. Das ist aber gerade für größere Projekte nicht immer sinnvoll. Um das Verhalten des Testprogramms zu ändern, gibt es es Flags, die man im Quellcode setzen kann. Zusätzlich lassen sich alle Flags auch über die Kommandozeile überschreiben.
@@ -793,8 +876,31 @@ int main(int argc,char **argv){
 
 ### Wert-parametrisierte Test ###
 
-[Fürs erste hier](https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#value-parameterized-tests)
+Oft möchte man einen Test mit verschiedenen Variablen durchführen. Aber es gibt eine bessere Möglichkeit, als für jede Variable einen eigenen Test zu schreiben. Dies sind wert-parametrisierte Tests. Hier wird nur die einfache Möglichkeit vorgestellt. Wer noch mehr Freiheiten braucht, sollte
+[hier](https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#value-parameterized-tests) nachschauen.
 
+Hat man einen Parameter, denn man verändern möcht, sollte man sich über den Typ klar werden. Denn man leitet seine Klasse von `::testing::WithParamInterface< T >` ab, ersetzt aber das `T` mit dem Typ des Parameters.
+
+```cpp
+class BeispielTest : public ::testing::TestWithParam< Variablentyp > {
+
+// Man kann hier auch alle den üblichen Fixture Code hier reinschreiben.
+// Um den Testparameter anzusprechen, rufe GetParam() der Klasse TestWithParam< T > auf.  
+
+};
+```
+
+Falls es mit den parametrisierten Test einmal nicht funktionieren sollte, dann kann es daran liegen, dass zu viele Variablen übergeben wurden. Mehr als 50 direkt festgelegte Parameter unterstützt googletest nicht, da sie nicht mit variadic Templates arbeiten.
+
+Es gibt folgende Möglichkeiten Parameter feszulegen:
+
+| Befehl | Auswirkung |
+|:-------|:-----------|
+| `Range(start, ende[, schrittweite])` | Erzeugt die Werte `{start, start+schrittweite, start+schrittweite+schrittweite, ...}`. Die Werte enthalten nicht den Wert `ende`. Die  `schrittweite` ist standardmäßig auf 1 festgesetzt. |
+| `Values(v1, v2, ..., vN)`   | Hält die Werte `{v1, v2, ..., vN}` vor.                                                                                |
+| `ValuesIn(container)` und `ValuesIn(start, ende)` | Stellt Werte aus einem C-style array, einem STL-style container oder der Iterator range `[start, ende)`. `container`, `start` und `ende` können Ausrücke sein, die zur Laufzeit bestimmt werden.  |
+| `Bool()`                    | Hält die Werte `{false, true}` vor.                                                                                  |
+| `Combine(g1, g2, ..., gN)`  | Generiert das kartesische Produkt der Tupel. Dies steht nur zur Verfügung, wenn das System den `<tr1/tuple>` Header zur Verfügung stellt. Wenn man sich sicher ist, dass man diesen hat, obwohl gtest dies verneint, kann man die Verwendung mit `GTEST_HAS_TR1_TUPLE=1` erzwingen. |
 ##### Übung 6 #####
 
 ### Typisierte Tests ###
