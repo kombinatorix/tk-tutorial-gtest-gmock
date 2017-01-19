@@ -2,7 +2,7 @@
 
 Damit wir uns Tipparbeit sparen, wird die Variable `${GTEST_DIR}` mit dem Pfad zum googletest-Ordner gesetzt. Dazu füge in der `~/.bashrc` folgende Zeile hinzu.
 
-	export GTEST_DIR = Pfad/zum/Ordner/googletest/googletest/
+	export GTEST_DIR=Pfad/zum/Ordner/googletest/googletest/
 
 Danach musst du in der Kommandozeile einmal `source ~/.bashrc` ausführen, damit der Befehl geladen wird.
 
@@ -65,7 +65,7 @@ Mehr Informationen brauchen wir nicht für unseren ersten Test. Hierzu nutzen wi
 <td valign="top">
 <pre lang = "C++">
 	#include "include/prog1.hpp"
-	#include <iostream>
+	#include < iostream >
 
 	int add(short a, short b){
 	    return static_cast< int >(a+b);
